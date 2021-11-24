@@ -5,6 +5,8 @@ $(document).ready(() => {
   const navToggle = document.querySelector('.nav-toggle')
   const headerTop = document.querySelector('.header-top')
   const scrollTop = document.querySelector('.scroll-top')
+  const tabs = document.querySelectorAll('.tab-item')
+  const panes = document.querySelectorAll('.pane-item')
 
   showMenu(navToggle,navMenu)
   showHeaderTop(headerTop)
@@ -83,6 +85,23 @@ $(document).ready(() => {
       },
     ]
   })
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(tab => tab.classList.remove('tab-active'))
+      tab.classList.add('tab-active')
+
+      const tabId = tab.attributes.id.value;
+      let paneActive = null;
+
+      panes.forEach(pane => {
+        pane.style.display = 'none'
+        if(pane.attributes.id.value == tabId) paneActive = pane
+      })
+
+      paneActive.style.display = "block"
+    })
+  })
 })
 
 
@@ -93,7 +112,7 @@ function showMenu(toggle, menu) {
 function showHeaderTop(headerTop) {
   if(headerTop) {
     window.addEventListener('scroll', () => {
-      if (this.scrollY > 100) headerTop.classList.add('hide') 
+      if (this.scrollY > 0) headerTop.classList.add('hide') 
       else headerTop.classList.remove('hide')
     })
   }
